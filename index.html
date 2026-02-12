@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap');
+        
+        body {
+            background-color: #fff5f5;
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .romantic-title {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .heart {
+            position: fixed;
+            top: -10%;
+            user-select: none;
+            pointer-events: none;
+            z-index: 0;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        #noBtn {
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .img-container {
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.2);
+            border: 8px solid white;
+            transform: rotate(-2deg);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Contenido Principal -->
+    <div class="max-w-md w-full bg-white/80 backdrop-blur-sm rounded-3xl p-8 text-center shadow-xl z-10 relative border border-pink-100">
+        
+        <!-- Tu Imagen -->
+        <div class="img-container overflow-hidden rounded-lg mb-8 mx-auto w-64 h-80">
+            <img src="22.jpg" alt="Nuestra Foto" class="w-full h-full object-cover">
+        </div>
+
+        <h1 class="romantic-title text-4xl md:text-5xl text-red-600 mb-6">
+            ¿Quieres ser mi San Valentín este 14 de Febrero?
+        </h1>
+
+        <p class="text-gray-600 mb-8 italic">
+            "Eres lo mejor que me ha pasado y me encantaría pasar este día tan especial a tu lado."
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <!-- Botón SI -->
+            <button onclick="celebrate()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-10 rounded-full text-xl shadow-lg transform hover:scale-110 transition duration-300">
+                ¡SÍ! ❤️
+            </button>
+
+            <!-- Botón NO (Escurridizo) -->
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()" class="bg-gray-200 text-gray-500 font-semibold py-3 px-10 rounded-full text-xl">
+                No
+            </button>
+        </div>
+
+        <!-- Mensaje de éxito oculto -->
+        <div id="successMessage" class="hidden mt-8">
+            <h2 class="romantic-title text-3xl text-pink-600">¡Sabía que dirías que sí! 🥰</h2>
+            <p class="text-gray-500 mt-2">¡Nos vemos el 14!</p>
+            <div class="text-5xl mt-4">🌹✨🥂</div>
+        </div>
+    </div>
+
+    <script>
+        // Función para mover el botón "No"
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 20);
+            
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        // Función cuando dice que SÍ
+        function celebrate() {
+            document.getElementById('successMessage').classList.remove('hidden');
+            document.getElementById('noBtn').classList.add('hidden');
+            
+            // Crear lluvia de corazones
+            for(let i = 0; i < 50; i++) {
+                createHeart();
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = ['❤️', '💖', '🌸', '✨', '🌹'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Iniciar lluvia suave al cargar
+        setInterval(createHeart, 500);
+    </script>
+</body>
+</html>
